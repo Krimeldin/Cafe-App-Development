@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +21,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             CafeApp_KarimTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    MenuScreen(modifier = Modifier.padding(innerPadding))
+
                 }
             }
         }
@@ -45,3 +44,31 @@ fun GreetingPreview() {
         Greeting("User")
     }
 }
+
+@Composable
+fun MenuScreen(modifier: Modifier = Modifier) {
+    androidx.compose.foundation.layout.Column(
+        modifier = modifier.fillMaxSize()
+    ) {
+        Text(
+            text = "Our Coffee Menu",
+            style = androidx.compose.material3.MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(16.dp)
+        )
+
+        // You’ll later add your list of coffee items here
+        Text(
+            text = "☕ Cappuccino\n☕ Latte\n☕ Espresso\n☕ Mocha",
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MenuScreenPreview() {
+    CafeApp_KarimTheme {
+        MenuScreen()
+    }
+}
+
