@@ -27,7 +27,11 @@ fun MenuScreen(navController: NavController) {
         CoffeeItem("Doughnuts", "$4.50", R.drawable.Doughnuts)
     )
 
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         TopAppBar(
             title = { Text("Menu", fontSize = 22.sp) }
         )
@@ -38,7 +42,9 @@ fun MenuScreen(navController: NavController) {
         ) {
             items(coffeeList) { coffee ->
                 CoffeeCard(coffee) {
-                    navController.navigate("detail/${coffee.name}/${coffee.price}")
+                    navController.navigate(
+                        "detail/${coffee.name}/${coffee.price}/${coffee.imageRes}"
+                    )
                 }
             }
         }
@@ -61,12 +67,11 @@ fun CoffeeCard(item: CoffeeItem, onClick: () -> Unit) {
                     .size(100.dp)
                     .padding(8.dp)
             )
-            Column(
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
+            Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(text = item.name, fontSize = 20.sp)
                 Text(text = item.price, fontSize = 16.sp)
             }
         }
     }
 }
+

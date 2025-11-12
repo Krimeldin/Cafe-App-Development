@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.cafeapp_karim
 
 import android.os.Bundle
@@ -6,100 +8,100 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph
-import androidx.navigation.NavHostController
-import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.cafeapp_karim.data.CoffeeItem
+import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
+import com.example.cafeapp_karim.screens.MenuScreen
+import androidx.compose.material3.TopAppBar
 
-// --- MainActivity ---
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CafeApp_KarimTheme {
-                val navController = androidx.navigation.compose.rememberNavController()
-                NavGraph(navController = navController)
+                AppNavigation()
             }
         }
-
     }
-
-    private fun NavGraph(navController: NavHostController) {
-
-    }
-
 }
 
-
-// --- Data Model ---
-data class CoffeeItem(val name: String, val price: String, val imageRes: Int)
-
-// --- Sample Menu (add your drawable images in res/drawable) ---
-val sampleMenu = listOf(
-    CoffeeItem("CakePop", "$3.50", R.drawable.CakePop),
-    CoffeeItem("IcedCoffee", "$3.00", R.drawable.IcedCoffee),
-    CoffeeItem("Sandwich", "$2.50", R.drawable.Sandwich),
-    CoffeeItem("Doughnuts", "$4.00", R.drawable.Doughnuts)
-)
-
-// --- Menu Screen ---
 @Composable
-fun MenuScreen(modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        item {
-            Text(
-                text = "Our Coffee Menu",
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(16.dp)
+fun AppNavigation() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "menu") {
+        // Menu Screen
+        composable("menu") {
+            MenuScreen(navController)
+        }
+
+        // Detail Screen with arguments
+        composable(
+            route = "detail/{name}/{price}/{imageRes}",
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType },
+                navArgument("price") { type = NavType.StringType },
+                navArgument("imageRes") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            val price = backStackEntry.arguments?.getString("price") ?: ""
+            val imageRes = backStackEntry.arguments?.getInt("imageRes") ?: 0
+
+            DetailScreen(
+                coffeeItem = CoffeeItem(name, price, imageRes),
+                navController = navController
             )
         }
-        items(sampleMenu) { coffee ->
-            CoffeeCard(coffee)
-        }
     }
 }
 
-// --- Coffee Card ---
 @Composable
-fun CoffeeCard(item: CoffeeItem) {
-    Card(
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+fun DetailScreen(coffeeItem: CoffeeItem, navController: androidx.navigation.NavHostController) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(coffeeItem.name, fontSize = 22.sp) }
+            )
+        }
+    ) { padding ->
+        Column(modifier = Modifier
+            .padding(padding)
+            .padding(16.dp)) {
+
             Image(
-                painter = painterResource(id = item.imageRes),
-                contentDescription = item.name,
-                modifier = Modifier.size(64.dp)
+                painter = painterResource(id = coffeeItem.imageRes),
+                contentDescription = coffeeItem.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
             )
-            Column(modifier = Modifier.weight(1f).padding(start = 16.dp)) {
-                Text(text = item.name, style = MaterialTheme.typography.titleMedium)
-                Text(text = item.price, style = MaterialTheme.typography.bodyMedium)
-            }
-            Button(onClick = { /* TODO: Add to cart functionality */ }) {
-                Text("Add")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(text = "Price: ${coffeeItem.price}", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Delicious ${coffeeItem.name} to brighten your day!",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(onClick = { navController.popBackStack() }) {
+                Text("Back to Menu")
             }
         }
     }
 }
-
-// --- Previews ---
-@Preview(showBackground = true)
-@Composable
-fun MenuScreenPreview() {
-    CafeApp_KarimTheme {
-        MenuScreen()
-    }
-}
-
