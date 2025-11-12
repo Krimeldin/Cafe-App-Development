@@ -1,20 +1,25 @@
-package com.example.cafeapp_karim.Navigation
+package com.example.cafeapp_karim.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.cafeapp_karim.MenuScreen
+import com.example.cafeapp_karim.screens.MenuScreen
+import com.example.cafeapp_karim.screens.DetailScreen
 
 @Composable
-fun CafeNavGraph() {
-    val navController: NavHostController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "menu") {
-        composable("menu") { MenuScreen() }
-        // Add more screens here later
-        // composable("details") { DetailsScreen() }
-        // composable("cart") { CartScreen() }
+fun NavGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = "menu"
+    ) {
+        composable("menu") {
+            MenuScreen(navController = navController)
+        }
+        composable("detail/{coffeeName}/{coffeePrice}") { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("coffeeName")
+            val price = backStackEntry.arguments?.getString("coffeePrice")
+            DetailScreen(name, price)
+        }
     }
 }

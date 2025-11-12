@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph
 import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
 
 // --- MainActivity ---
@@ -23,9 +24,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CafeApp_KarimTheme {
-                MenuScreen()
+                val navController = androidx.navigation.compose.rememberNavController()
+                NavGraph(navController = navController)
             }
         }
+
+    }
+
     }
 }
 
