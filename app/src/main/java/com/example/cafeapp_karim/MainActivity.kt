@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph
 import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
+import com.example.cafeapp_karim.data.CoffeeItem
 
 // --- MainActivity ---
 class MainActivity : ComponentActivity() {
