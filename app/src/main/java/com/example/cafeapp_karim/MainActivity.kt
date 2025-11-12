@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph
+import androidx.navigation.NavHostController
 import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
 import com.example.cafeapp_karim.data.CoffeeItem
 
@@ -32,8 +33,12 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    private fun NavGraph(navController: NavHostController) {
+
     }
+
 }
+
 
 // --- Data Model ---
 data class CoffeeItem(val name: String, val price: String, val imageRes: Int)
