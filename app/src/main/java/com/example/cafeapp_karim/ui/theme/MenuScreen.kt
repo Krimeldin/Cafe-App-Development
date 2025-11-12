@@ -24,10 +24,10 @@ data class CoffeeItem(val name: String, val price: String, val imageRes: Int)
 @Composable
 fun MenuScreen() {
     val coffeeList = listOf(
-        CoffeeItem("Cappuccino", "$3.50", R.drawable.cappuccino),
-        CoffeeItem("Latte", "$4.00", R.drawable.latte),
-        CoffeeItem("Espresso", "$2.50", R.drawable.espresso),
-        CoffeeItem("Mocha", "$4.50", R.drawable.mocha)
+        CoffeeItem("CakePop", "$3.50", R.drawable.CakePop),
+        CoffeeItem("IcedCoffee", "$4.00", R.drawable.IcedCoffee),
+        CoffeeItem("Sandwich", "$2.50", R.drawable.Sandwich),
+        CoffeeItem("Doughnuts", "$4.50", R.drawable.Doughnuts)
     )
 
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {

@@ -4,19 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 
 // --- MainActivity ---
 class MainActivity : ComponentActivity() {
@@ -25,31 +23,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CafeApp_KarimTheme {
-                CafeNavGraph()
+                MenuScreen()
             }
         }
     }
 }
 
-// --- Navigation Graph ---
-@Composable
-fun CafeNavGraph() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "menu") {
-        composable("menu") { MenuScreen() }
-        // Add more screens here in the future
-        // composable("details/{coffeeId}") { DetailsScreen(...) }
-    }
-}
-
 // --- Data Model ---
-data class CoffeeItem(val name: String, val price: String)
+data class CoffeeItem(val name: String, val price: String, val imageRes: Int)
 
+// --- Sample Menu (add your drawable images in res/drawable) ---
 val sampleMenu = listOf(
-    CoffeeItem("Cappuccino", "$3.50"),
-    CoffeeItem("Latte", "$3.00"),
-    CoffeeItem("Espresso", "$2.50"),
-    CoffeeItem("Mocha", "$4.00")
+    CoffeeItem("CakePop", "$3.50", R.drawable.CakePop),
+    CoffeeItem("IcedCoffee", "$3.00", R.drawable.IcedCoffee),
+    CoffeeItem("Sandwich", "$2.50", R.drawable.Sandwich),
+    CoffeeItem("Doughnuts", "$4.00", R.drawable.Doughnuts)
 )
 
 // --- Menu Screen ---
@@ -64,23 +52,33 @@ fun MenuScreen(modifier: Modifier = Modifier) {
             )
         }
         items(sampleMenu) { coffee ->
-            MenuItemCard(coffee)
+            CoffeeCard(coffee)
         }
     }
 }
 
-// --- Menu Item Card ---
+// --- Coffee Card ---
 @Composable
-fun MenuItemCard(item: CoffeeItem) {
+fun CoffeeCard(item: CoffeeItem) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .fillMaxSize(),
+            .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        androidx.compose.foundation.layout.Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = item.name, style = MaterialTheme.typography.titleMedium)
-            Text(text = item.price, style = MaterialTheme.typography.bodyMedium)
+        Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Image(
+                painter = painterResource(id = item.imageRes),
+                contentDescription = item.name,
+                modifier = Modifier.size(64.dp)
+            )
+            Column(modifier = Modifier.weight(1f).padding(start = 16.dp)) {
+                Text(text = item.name, style = MaterialTheme.typography.titleMedium)
+                Text(text = item.price, style = MaterialTheme.typography.bodyMedium)
+            }
+            Button(onClick = { /* TODO: Add to cart functionality */ }) {
+                Text("Add")
+            }
         }
     }
 }
@@ -93,6 +91,4 @@ fun MenuScreenPreview() {
         MenuScreen()
     }
 }
-
-
 
