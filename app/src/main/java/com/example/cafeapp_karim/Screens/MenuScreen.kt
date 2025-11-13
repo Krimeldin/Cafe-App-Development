@@ -21,10 +21,10 @@ import com.example.cafeapp_karim.data.CoffeeItem
 @Composable
 fun MenuScreen(navController: NavController) {
     val coffeeList = listOf(
-        CoffeeItem("CakePop", "$3.50", R.drawable.CakePop),
-        CoffeeItem("IcedCoffee", "$4.00", R.drawable.IcedCoffee),
-        CoffeeItem("Sandwich", "$2.50", R.drawable.Sandwich),
-        CoffeeItem("Doughnuts", "$4.50", R.drawable.Doughnuts)
+        CoffeeItem("CakePop", "$3.50", R.drawable.cakepop),
+        CoffeeItem("IcedCoffee", "$4.00", R.drawable.icedcoffee),
+        CoffeeItem("Sandwich", "$2.50", R.drawable.sandwich),
+        CoffeeItem("Doughnuts", "$4.50", R.drawable.doughnuts)
     )
 
     Column(modifier = Modifier
