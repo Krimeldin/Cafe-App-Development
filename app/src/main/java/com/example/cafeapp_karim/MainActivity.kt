@@ -18,6 +18,8 @@ import Viewmodel.CartViewModel
 import com.example.cafeapp_karim.screens.LoginScreen
 import com.example.cafeapp_karim.screens.RegisterScreen
 import com.example.cafeapp_karim.viewmodel.AuthViewModel
+import com.example.cafeapp_karim.screens.CartScreen
+import com.example.cafeapp_karim.screens.CheckoutScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +32,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val cartViewModel: CartViewModel = viewModel() // <-- Add CartViewModel here
+    val cartViewModel: CartViewModel = viewModel()
     val authViewModel: AuthViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = "login") {
@@ -47,11 +48,10 @@ fun AppNavigation() {
             RegisterScreen(navController, authViewModel)
         }
 
-
         composable("menu") {
-            // Pass the cartViewModel to MenuScreen so items can be added
             MenuScreen(navController, cartViewModel)
         }
+
         composable(
             route = "detail/{name}/{price}/{description}",
             arguments = listOf(
@@ -59,15 +59,29 @@ fun AppNavigation() {
                 navArgument("price") { type = NavType.StringType },
                 navArgument("description") { type = NavType.StringType; defaultValue = "" }
             )
-
         ) { backStackEntry ->
             val name = backStackEntry.arguments?.getString("name") ?: ""
             val price = backStackEntry.arguments?.getString("price") ?: ""
             val description = backStackEntry.arguments?.getString("description") ?: ""
-            DetailScreen(name = name, price = price, description = description, cartViewModel = cartViewModel, navController = navController)
+            DetailScreen(
+                name = name,
+                price = price,
+                description = description,
+                cartViewModel = cartViewModel,
+                navController = navController
+            )
+        }
 
+
+        composable("cart") {
+            CartScreen(navController = navController, cartViewModel = cartViewModel)
+        }
+
+        composable("checkout") {
+            CheckoutScreen(navController = navController, cartViewModel = cartViewModel)
         }
     }
 }
+
 
 

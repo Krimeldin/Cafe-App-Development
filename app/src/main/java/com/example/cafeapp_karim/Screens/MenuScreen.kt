@@ -23,11 +23,15 @@ import com.example.cafeapp_karim.R
 @Composable
 fun MenuScreen(navController: NavHostController, cartViewModel: CartViewModel = viewModel()) {
     val coffeeList = listOf(
+        CoffeeItem("IcedFrappe", "$3.20", R.drawable.icedfrappe, "Cool iced frappe"),
         CoffeeItem("CakePop", "$3.50",  R.drawable.cakepop, "Delicious cake pop with sprinkles"),
         CoffeeItem("IcedCoffee", "$4.00", R.drawable.icedcoffee,"Refreshing cold coffee"),
         CoffeeItem("Sandwich", "$2.50", R.drawable.sandwich,"Fresh sandwich with fillings"),
         CoffeeItem("Doughnuts", "$4.50", R.drawable.doughnuts, "Sweet doughnuts with glaze")
+
     )
+
+
 
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         TopAppBar(title = { Text("Menu", fontSize = 22.sp) })

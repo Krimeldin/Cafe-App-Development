@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,7 +14,8 @@ import Viewmodel.CartViewModel
 
 @Composable
 fun CartScreen(navController: NavHostController, cartViewModel: CartViewModel) {
-    val cartItems by remember { mutableStateOf(cartViewModel.cartItems.toMutableStateList()) }
+    // <-- Use cartItems directly from ViewModel
+    val cartItems = cartViewModel.cartItems
     val totalPrice = cartItems.sumOf { it.price.toDoubleOrNull() ?: 0.0 }
 
     Column(
@@ -53,9 +54,7 @@ fun CartScreen(navController: NavHostController, cartViewModel: CartViewModel) {
                             Column(horizontalAlignment = Alignment.End) {
                                 Text("$${item.price}", style = MaterialTheme.typography.bodyMedium)
                                 Spacer(modifier = Modifier.height(4.dp))
-                                TextButton(onClick = {
-                                    cartViewModel.removeFromCart(item)
-                                }) {
+                                TextButton(onClick = { cartViewModel.removeFromCart(item) }) {
                                     Text("Remove")
                                 }
                             }
