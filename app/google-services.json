@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:312588610543:android:81ebbed6a7b4c5b1fb641a",
+        "android_client_info": {
+          "package_name": "com.example.cafeapp_karim"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAslSCPymTOjoQJN06bht6Q6_lZwT1rAls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:312588610543:android:8346056c8d99fbe2fb641a",
         "android_client_info": {
           "package_name": "com.karim.cafeapp"
