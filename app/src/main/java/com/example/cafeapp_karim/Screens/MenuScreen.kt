@@ -13,18 +13,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.cafeapp_karim.R
 import com.example.cafeapp_karim.data.CoffeeItem
+import com.example.cafeapp_karim.data.CartItem
+import com.example.cafeapp_karim.viewmodel.CartViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(navController: NavController) {
+fun MenuScreen(navController: NavController, cartViewModel: CartViewModel = viewModel()) {
     val coffeeList = listOf(
-        CoffeeItem("CakePop", "$3.50", R.drawable.cakepop),
-        CoffeeItem("IcedCoffee", "$4.00", R.drawable.icedcoffee),
-        CoffeeItem("Sandwich", "$2.50", R.drawable.sandwich),
-        CoffeeItem("Doughnuts", "$4.50", R.drawable.doughnuts)
+        CoffeeItem("CakePop", "$3.50", R.drawable.cakepop, "Delicious sweet cake pop."),
+        CoffeeItem("IcedCoffee", "$4.00", R.drawable.icedcoffee, "Chilled refreshing coffee."),
+        CoffeeItem("Sandwich", "$2.50", R.drawable.sandwich, "Freshly made sandwich."),
+        CoffeeItem("Doughnuts", "$4.50", R.drawable.doughnuts, "Sweet and fluffy doughnuts.")
     )
 
     Column(modifier = Modifier
@@ -40,16 +43,23 @@ fun MenuScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(coffeeList) { coffee ->
-                CoffeeCard(coffee) {
-                    navController.navigate("detail/${coffee.name}/${coffee.price}")
-                }
+                CoffeeCard(coffee,
+                    onClick = {
+                        navController.navigate("detail/${coffee.name}/${coffee.price}/${coffee.description}")
+                    },
+                    onAddToCart = {
+                        cartViewModel.addToCart(
+                            CartItem(coffee.name, coffee.price, coffee.description)
+                        )
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun CoffeeCard(item: CoffeeItem, onClick: () -> Unit) {
+fun CoffeeCard(item: CoffeeItem, onClick: () -> Unit, onAddToCart: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,12 +75,17 @@ fun CoffeeCard(item: CoffeeItem, onClick: () -> Unit) {
                     .padding(8.dp)
             )
             Column(
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(1f)
             ) {
                 Text(text = item.name, style = MaterialTheme.typography.titleMedium)
                 Text(text = item.price, style = MaterialTheme.typography.bodyMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(onClick = { onAddToCart() }) {
+                    Text("Add to Cart")
+                }
             }
         }
     }
 }
-

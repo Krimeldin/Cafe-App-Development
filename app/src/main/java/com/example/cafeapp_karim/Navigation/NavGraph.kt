@@ -17,10 +17,9 @@ fun NavGraph(navController: NavHostController) {
             MenuScreen(navController = navController)
         }
         composable("detail/{coffeeName}/{coffeePrice}") { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("coffeeName") ?: "Unknown Coffee"
-            val price = backStackEntry.arguments?.getString("coffeePrice") ?: "0.0"
-            DetailScreen(name, price)
+            val name = backStackEntry.arguments?.getString("coffeeName") ?: ""
+            val price = backStackEntry.arguments?.getString("coffeePrice") ?: ""
+            DetailScreen(name, price, navController)
         }
-
     }
 }

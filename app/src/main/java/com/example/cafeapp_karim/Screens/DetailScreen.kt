@@ -3,24 +3,35 @@ package com.example.cafeapp_karim.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.example.cafeapp_karim.data.CartItem
+import com.example.cafeapp_karim.viewmodel.CartViewModel
 
 @Composable
-fun DetailScreen(name: String, price: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+fun DetailScreen(
+    coffeeName: String,
+    coffeePrice: String,
+    coffeeDescription: String,
+    navController: NavController,
+    cartViewModel: CartViewModel = viewModel()
+) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)
     ) {
-        Text(text = name, style = MaterialTheme.typography.headlineMedium, fontSize = 28.sp)
+        Text(coffeeName, style = MaterialTheme.typography.titleLarge)
+        Text(coffeePrice, style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = price, style = MaterialTheme.typography.titleMedium, fontSize = 22.sp)
+        Text(coffeeDescription, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /* TODO: Add to cart */ }) {
+        Button(onClick = {
+            cartViewModel.addToCart(
+                CartItem(coffeeName, coffeePrice, coffeeDescription)
+            )
+        }) {
             Text("Add to Cart")
         }
     }
