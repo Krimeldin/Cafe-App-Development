@@ -6,7 +6,7 @@ import com.example.cafeapp_karim.data.CartItem
 
 class CartViewModel : ViewModel() {
     private val _cartItems = mutableStateListOf<CartItem>()
-    val cartItems: List<CartItem> get() = _cartItems
+    val cartItems: List<CartItem> = _cartItems
 
     fun addToCart(item: CartItem) {
         _cartItems.add(item)

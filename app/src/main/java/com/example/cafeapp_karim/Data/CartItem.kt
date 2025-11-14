@@ -2,7 +2,6 @@ package com.example.cafeapp_karim.data
 
 data class CartItem(
     val name: String,
-    val description: String,
-    val price: String
-
+    val price: String,
+    val description: String = "" // optional description
 )

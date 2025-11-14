@@ -15,13 +15,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.cafeapp_karim.data.CoffeeItem
 import com.example.cafeapp_karim.data.CartItem
 import com.example.cafeapp_karim.viewmodel.CartViewModel
 import com.example.cafeapp_karim.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(navController: NavController, cartViewModel: CartViewModel = viewModel()) {
+fun MenuScreen(navController: NavHostController, cartViewModel: CartViewModel = viewModel()) {
     val coffeeList = listOf(
         CoffeeItem("CakePop", "$3.50",  R.drawable.cakepop, "Delicious cake pop with sprinkles"),
         CoffeeItem("IcedCoffee", "$4.00", R.drawable.icedcoffee,"Refreshing cold coffee"),
