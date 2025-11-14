@@ -14,26 +14,55 @@ import com.example.cafeapp_karim.data.CartItem
 import com.example.cafeapp_karim.data.CoffeeItem
 import com.example.cafeapp_karim.viewmodel.CartViewModel
 import com.example.cafeapp_karim.R
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
 fun DetailScreen(
     name: String,
     price: String,
     description: String,
-    navController: NavHostController,
-    cartViewModel: CartViewModel = viewModel()
+    cartViewModel: CartViewModel,
+    navController: NavHostController
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(name, style = MaterialTheme.typography.titleLarge)
+        Text(text = name, style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(price, style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(description, style = MaterialTheme.typography.bodyMedium)
+        Text(text = description, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
-            cartViewModel.addToCart(CartItem(name, price, description))
-        }) {
+        Text(text = price, style = MaterialTheme.typography.titleMedium)
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = {
+                // Add item to cart
+                cartViewModel.addToCart(CartItem(name, price, description))
+                // Show snackbar
+                scope.launch {
+                    snackbarHostState.showSnackbar("$name added to cart")
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text("Add to Cart")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Navigate to CartScreen
+        Button(
+            onClick = { navController.navigate("cart") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Go to Cart")
+        }
+
+        // SnackbarHost to display messages
+        SnackbarHost(hostState = snackbarHostState)
     }
 }
