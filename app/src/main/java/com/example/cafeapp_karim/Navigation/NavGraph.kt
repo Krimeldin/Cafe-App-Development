@@ -8,6 +8,7 @@ import com.example.cafeapp_karim.screens.CartScreen
 import com.example.cafeapp_karim.screens.DetailScreen
 import com.example.cafeapp_karim.screens.MenuScreen
 import com.example.cafeapp_karim.viewmodel.CartViewModel
+import com.example.cafeapp_karim.screens.CheckoutScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, cartViewModel: CartViewModel) {
@@ -33,6 +34,12 @@ fun NavGraph(navController: NavHostController, cartViewModel: CartViewModel) {
         composable("cart") {
             CartScreen(cartViewModel = cartViewModel, navController = navController)
         }
+
+        composable("checkout") {
+            CheckoutScreen(navController = navController, cartViewModel = cartViewModel)
+        }
+
+
 
     }
 }
