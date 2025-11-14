@@ -14,11 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.cafeapp_karim.data.CoffeeItem
-import com.example.cafeapp_karim.data.CartItem
-import com.example.cafeapp_karim.viewmodel.CartViewModel
+import Viewmodel.CartViewModel
 import com.example.cafeapp_karim.R
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -14,7 +14,10 @@ import androidx.navigation.navArgument
 import com.example.cafeapp_karim.screens.DetailScreen
 import com.example.cafeapp_karim.screens.MenuScreen
 import com.example.cafeapp_karim.ui.theme.CafeApp_KarimTheme
-import com.example.cafeapp_karim.viewmodel.CartViewModel
+import Viewmodel.CartViewModel
+import com.example.cafeapp_karim.screens.LoginScreen
+import com.example.cafeapp_karim.screens.RegisterScreen
+import com.example.cafeapp_karim.viewmodel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +35,19 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation() {
     val navController = rememberNavController()
     val cartViewModel: CartViewModel = viewModel() // <-- Add CartViewModel here
+    val authViewModel: AuthViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = "menu") {
+    NavHost(navController = navController, startDestination = "login") {
+
+        composable("login") {
+            LoginScreen(navController, authViewModel)
+        }
+
+        composable("register") {
+            RegisterScreen(navController, authViewModel)
+        }
+
+
         composable("menu") {
             // Pass the cartViewModel to MenuScreen so items can be added
             MenuScreen(navController, cartViewModel)

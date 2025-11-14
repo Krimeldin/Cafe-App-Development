@@ -10,8 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.cafeapp_karim.data.CartItem
-import com.example.cafeapp_karim.viewmodel.CartViewModel
+import Viewmodel.CartViewModel
 
 @Composable
 fun CartScreen(navController: NavHostController, cartViewModel: CartViewModel) {

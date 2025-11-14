@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -47,6 +49,7 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.6.0")
     implementation("androidx.compose.material3:material3:1.2.0")
     implementation("androidx.compose.ui:ui-tooling-preview:1.6.0")
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.1")
 
     // Navigation for Compose
     implementation("androidx.navigation:navigation-compose:2.8.0")
